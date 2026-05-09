@@ -1,4 +1,4 @@
-# DISCLAIMER : SCRIPT INI 90% DIBUAT TANPA AI. PENGGUNAAN AI HANYA UNTUK MEMBANTU PENJELASAN DOKUMENTASI DARI MODULE
+# DISCLAIMER : SCRIPT INI 97% DIBUAT TANPA AI. PENGGUNAAN AI HANYA UNTUK MEMBANTU PENJELASAN DOKUMENTASI DARI MODULE
 # PULL GITHUB BERIKUT :
 # https://github.com/TekajeClass/pc-router-playbook
 # Script Created by : Bagas Maulana
@@ -8,39 +8,39 @@
   become: yes
   vars_prompt:
     - name: wan_interface
-      prompt: "Masukkan interface yang mengarah ke public (Contoh : ens33)"
+      prompt: "Masukkan interface yang mengarah ke public (Contoh : ens33) | "
       private: no
 
     - name: secondary_interface
-      prompt: "Masukkan interface kedua anda (Contoh : ens37)"
+      prompt: "Masukkan interface kedua anda (Contoh : ens37) | "
       private: no
 
     - name: secondary_ip_addr
-      prompt: "Masukkan ip address interface kedua dengan prefix (Contoh : 100.100.10.1/24)"
+      prompt: "Masukkan ip address interface kedua dengan prefix (Contoh : 100.100.10.1/24) | "
       private: no
     
     - name: dhcp_network
-      prompt: "Masukkan network untuk dhcp pool anda (Contoh : 100.100.10.0)"
+      prompt: "Masukkan network untuk dhcp pool anda (Contoh : 100.100.10.0) | "
       private: no
 
     - name: dhcp_netmask
-      prompt: "Masukkan netmask untuk dhcp pool anda (Contoh : 255.255.255.0)"
+      prompt: "Masukkan netmask untuk dhcp pool anda (Contoh : 255.255.255.0) | "
       private: no
 
     - name: dhcp_range
-      prompt: "Masukkan range untuk dhcp pool anda (Contoh : 100.100.10.2 100.100.10.254)"
+      prompt: "Masukkan range untuk dhcp pool anda (Contoh : 100.100.10.2 100.100.10.254) | "
       private: no
 
     - name: dhcp_dns
-      prompt: "Masukkan nameserver/DNS untuk dhcp pool anda (Contoh : 8.8.8.8)"
+      prompt: "Masukkan nameserver/DNS untuk dhcp pool anda (Contoh : 8.8.8.8) | "
       private: no
 
     - name: dhcp_gateway
-      prompt: "Masukkan gateway untuk dhcp pool anda (Contoh : 100.100.10.1)"
+      prompt: "Masukkan gateway untuk dhcp pool anda (Contoh : 100.100.10.1) | "
       private: no
 
     - name: dhcp_broadcast
-      prompt: "Masukkan broadcast address untuk dhcp pool anda (Contoh : 100.100.10.255)"
+      prompt: "Masukkan broadcast address untuk dhcp pool anda (Contoh : 100.100.10.255) | "
       private: no
 
   tasks:
@@ -51,7 +51,7 @@
 
     - name: DISCLAIMER DARI CREATOR
       ansible.builtin.pause:
-        prompt: "DISCLAIMER: SCRIPT INI 90% DIBUAT TANPA AI. AI HANYA DIGUNAKAN UNTUK MEMBANTU MENJELASKAN DOKUMENTASI DARI MODULE ANSIBLE"
+        prompt: "DISCLAIMER: SCRIPT INI 97% DIBUAT TANPA AI. AI HANYA DIGUNAKAN UNTUK MEMBANTU MENJELASKAN DOKUMENTASI DARI MODULE ANSIBLE"
         seconds: 10
 
     - name: Update repository
@@ -113,9 +113,13 @@
         out_interface: "{{ wan_interface }}"
         jump: MASQUERADE
 
+    - name: REKOMENDASI
+      ansible.builtin.pause:
+        prompt: "REKOMENDASI : JIKA IP TIDAK MENGALIR, RESTART MANUAL CLIENT DAN CEK KONFIGURASI IP DI CLIENT ANDA"
+        seconds: 10
+
   handlers:
     - name: Restart pc-router
       systemd:
         name: isc-dhcp-server
         state: restarted
-
