@@ -47,12 +47,12 @@
     - name: TENTANG CREATOR
       ansible.builtin.pause:
         prompt: "This Playbook Created by analuaM sagaB | Universitas Bani Saleh"
-        seconds: 3
+        seconds: 5
 
     - name: DISCLAIMER DARI CREATOR
       ansible.builtin.pause:
-        prompt: "DISCLAIMER: SCRIPT INI 90% DIBUAT TANPA AI. PENGGUNAAN AI HANYA UNTUK MEMBANTU MENJELASKAN DOKUMENTASI DARI MODULE PLAYBOOK"
-        seconds: 7
+        prompt: "DISCLAIMER: SCRIPT INI 90% DIBUAT TANPA AI. AI HANYA DIGUNAKAN UNTUK MEMBANTU MENJELASKAN DOKUMENTASI DARI MODULE ANSIBLE"
+        seconds: 10
 
     - name: Update repository
       apt:
@@ -80,7 +80,11 @@
           allow-hotplug {{secondary_interface}}
           iface {{secondary_interface}} inet static
                 address {{secondary_ip_addr}}
-      notify: Restart networking
+
+    - name: Restart networking
+      systemd:
+        name: networking
+        state: restarted
 
     - name: Injecting Configuration File into isc-dhcp-server Manifest File
       template:
@@ -115,7 +119,3 @@
         name: isc-dhcp-server
         state: restarted
 
-    - name: Restart networking
-      systemd:
-        name: networking
-        state: restarted
