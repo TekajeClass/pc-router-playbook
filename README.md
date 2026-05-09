@@ -40,17 +40,17 @@ Proyek ini menyediakan Ansible Playbook untuk mengkonfigurasi komputer berbasis 
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Internet      │────│   WAN Interface │────│   Linux Router  │
+│   Internet      │────│   WAN Interface │────│   PC-Router     │
 │                 │    │   (ens33)       │    │   (Ansible)     │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
                                                      │
                                                      │ LAN Interface
                                                      │ (ens37)
                                                      │
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Client 1      │────│   Switch/Hub    │────│   DHCP Server   │
-│   (DHCP Client) │    │                 │    │   192.168.100.x │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
+┌─────────────────┐                           ┌─────────────────┐
+│   Client 1      │───────────────────────────│    Switch/Hub   │
+│   (DHCP Client) │                           │   192.168.100.x │
+└─────────────────┘                           └─────────────────┘
 ┌─────────────────┐                                   │
 │   Client 2      │───────────────────────────────────┘
 │   (DHCP Client) │
