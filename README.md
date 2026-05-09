@@ -34,7 +34,7 @@ Proyek ini menyediakan Ansible Playbook untuk mengkonfigurasi komputer berbasis 
 - Otomasi deployment network infrastructure
 - Learning tool untuk networking dan automation
 
-**Disclaimer**: Script ini dibuat 90% tanpa AI. AI hanya digunakan untuk membantu menjelaskan dokumentasi dari module Ansible.
+**Disclaimer**: Script ini dibuat 97% tanpa AI. AI hanya digunakan untuk membantu menjelaskan dokumentasi dari module Ansible.
 
 ## 🏗️ Arsitektur
 
