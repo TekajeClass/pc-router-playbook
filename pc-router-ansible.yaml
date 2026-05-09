@@ -80,6 +80,7 @@
           allow-hotplug {{secondary_interface}}
           iface {{secondary_interface}} inet static
                 address {{secondary_ip_addr}}
+      notify: Restart networking
 
     - name: Injecting Configuration File into isc-dhcp-server Manifest File
       template:
@@ -112,4 +113,9 @@
     - name: Restart pc-router
       systemd:
         name: isc-dhcp-server
+        state: restarted
+
+    - name: Restart networking
+      systemd:
+        name: networking
         state: restarted
