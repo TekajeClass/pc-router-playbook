@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Ansible](https://img.shields.io/badge/Ansible-2.9+-blue.svg)](https://ansible.com/)
-[![Ubuntu](https://img.shields.io/badge/Ubuntu-18.04+-orange.svg)](https://ubuntu.com/)
+[![Debian](https://img.shields.io/badge/Debian-A81D33?style=flat&logo=debian&logoColor=white)](https://www.debian.org/)
 
 **Otomatisasi konfigurasi PC/Linux sebagai router dengan DHCP server menggunakan Ansible**
 
@@ -72,13 +72,12 @@ Proyek ini menyediakan Ansible Playbook untuk mengkonfigurasi komputer berbasis 
 - ✅ **Template-based Setup** menggunakan Jinja2
 - ✅ **Error Handling** yang robust
 - ✅ **Idempotent** - dapat dijalankan berulang tanpa masalah
-- ✅ **Cross-platform** support untuk Debian/Ubuntu
+- ✅ **Cross-platform** support untuk Debian
 
 ## 📦 Persyaratan
 
 ### 🔧 Sistem Target (Router Machine)
-- **OS**: Linux berbasis Debian/Ubuntu
-  - Ubuntu 18.04 LTS atau lebih baru
+- **OS**: Linux berbasis Debian
   - Debian 9 (Stretch) atau lebih baru
 - **Hardware**:
   - Minimal 2 Network Interface Cards (NIC)
@@ -114,7 +113,7 @@ cd ansible-pc-router
 
 ### 2. Install Ansible
 
-**Pada Ubuntu/Debian:**
+**Pada Debian:**
 ```bash
 sudo apt-get update
 sudo apt-get install ansible python3-pip
@@ -155,7 +154,7 @@ Buat file `inventory.ini`:
 
 ```ini
 [routers]
-router-01 ansible_host=192.168.1.100 ansible_user=ubuntu ansible_port=22
+router-01 ansible_host=192.168.1.100 ansible_user=debian ansible_port=22
 
 [routers:vars]
 ansible_python_interpreter=/usr/bin/python3
@@ -260,10 +259,8 @@ ansible-pc-router/
 ├── 📄 README.md                    # Dokumentasi lengkap
 ├── 📄 pc-router-ansible.yaml       # Main playbook
 ├── 📄 dhcpd.conf                   # DHCP server template
-├── 📄 isc-dhcp-server             # ISC DHCP defaults template
-├── 📄 inventory.ini               # Ansible inventory (contoh)
-├── 📄 ansible.cfg                 # Ansible configuration (optional)
-└── 📁 roles/                      # Ansible roles (future enhancement)
+└── 📁 default/                      # Ansible roles (future enhancement)
+     └── 📄 isc-dhcp-server             # ISC DHCP defaults template
 ```
 
 ## 🔧 Tasks yang Dijalankan
@@ -391,7 +388,7 @@ sudo apt-get clean && sudo apt-get autoclean
 ## ❓ FAQ
 
 **Q: Apakah playbook ini bisa digunakan di distro Linux lain?**  
-A: Saat ini hanya mendukung Debian/Ubuntu. Untuk distro lain (RHEL/CentOS), perlu modifikasi package manager dan service names.
+A: Saat ini hanya mendukung Debian. Untuk distro lain (RHEL/CentOS), perlu modifikasi package manager dan service names.
 
 **Q: Bagaimana cara rollback konfigurasi?**  
 A: Backup file konfigurasi sebelum menjalankan playbook. Gunakan `ansible-playbook --check` untuk dry-run.
@@ -467,13 +464,13 @@ copies or substantial portions of the Software.
 ### Original Creator
 **Bagas Maulana**  
 🎓 Universitas Bani Saleh  
-📧 [Email](mailto:bagas@example.com)  
-🐙 [GitHub](https://github.com/bagas-maulana)
+📧 [Email](mailto:fopensource.ubs@gmail.com)  
+🐙 [GitHub](https://github.com/analuamsagab)
 
 ### Acknowledgments
 - ISC DHCP Project
 - Ansible Community
-- Ubuntu/Debian Communities
+- Debian Communities
 
 ## 📈 Changelog
 
@@ -494,8 +491,8 @@ copies or substantial portions of the Software.
 ### Getting Help
 
 1. **📖 Documentation**: Baca README.md dan comments di playbook
-2. **🐛 Issues**: Buat issue di [GitHub Issues](https://github.com/yourusername/ansible-pc-router/issues)
-3. **💬 Discussions**: Gunakan [GitHub Discussions](https://github.com/yourusername/ansible-pc-router/discussions)
+2. **🐛 Issues**: Buat issue di [GitHub Issues](https://github.com/TekajeClass/ansible-pc-router/issues)
+3. **💬 Discussions**: Gunakan [GitHub Discussions](https://github.com/TekajeClass/ansible-pc-router/discussions)
 4. **📧 Email**: Contact maintainer
 
 ### Reporting Bugs
@@ -519,7 +516,7 @@ Gunakan template issue untuk bug reports:
 
 <div align="center">
 
-**Made with ❤️ by Bagas Maulana**
+**Made with Brain🧠 by Bagas Maulana**
 
 ⭐ **Star this repo** if you found it helpful!
 
