@@ -446,7 +446,7 @@ yamllint pc-router-ansible.yaml
 **MIT License** - Lihat file [LICENSE](LICENSE) untuk detail lengkap.
 
 ```
-Copyright (c) 2024 Bagas Maulana
+Copyright (c) 2026 Bagas Maulana
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
