@@ -166,6 +166,8 @@ ansible_python_interpreter=/usr/bin/python3
 ### Basic Execution
 
 ```bash
+# Keluarkan script yaml dari folder pc-router-playbook
+mv pc-router-playbook/pc-router-ansible.yaml .
 # Menggunakan inventory file
 ansible-playbook -i inventory.ini pc-router-ansible.yaml
 
