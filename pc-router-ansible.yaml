@@ -1,6 +1,6 @@
 # DISCLAIMER : SCRIPT INI 90% DIBUAT TANPA AI. PENGGUNAAN AI HANYA UNTUK MEMBANTU PENJELASAN DOKUMENTASI DARI MODULE
 # PULL GITHUB BERIKUT :
-# blablabla
+# https://github.com/TekajeClass/pc-router-playbook
 # Script Created by : Bagas Maulana
 ---
 - name: PC Router Configuration Playbook
@@ -63,11 +63,13 @@
       apt:
         name: isc-dhcp-server
         state: present
+      ignore_errors: yes
 
     - name: Installing Package (2/2)
       apt:
         name: iptables
         state: present
+      ignore_errors: yes
         
     - name: Add secondary interface for distribution
       ansible.builtin.blockinfile:
