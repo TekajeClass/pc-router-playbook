@@ -89,7 +89,7 @@
 
     - name: Injecting Configuration File into isc-dhcp-server Manifest File
       template:
-        src: pc-router-playbook/dhcpd.conf
+        src: pc-router-playbook/dhcp-config/dhcpd.conf
         dest: /etc/dhcp/dhcpd.conf
       notify: Restart pc-router
 
