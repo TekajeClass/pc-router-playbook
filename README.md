@@ -8,6 +8,8 @@
 
 > Transform your Linux machine into a fully functional router with DHCP server capabilities through automated Ansible deployment.
 
+> ⚠️ Catatan: file `pc-router-ansible-vlan.yaml` saat ini masih berada di versi pertama. Silakan gunakan dengan hati-hati dan laporkan temuan bila diperlukan.
+
 ## 📋 Daftar Isi
 
 - [Tentang Proyek](#tentang-proyek)
