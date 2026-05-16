@@ -9,11 +9,11 @@
   become: yes
   vars_prompt:
     - name: wan_interface
-      prompt: "Masukkan interface yang mengarah ke public (Contoh : ens33) | "
+      prompt: "[PRIMARY] Masukkan interface yang mengarah ke public (Contoh : ens33) | "
       private: no
 
     - name: secondary_interface
-      prompt: "Masukkan interface kedua anda (Contoh : ens37) | "
+      prompt: "[PRIMARY] Masukkan interface kedua anda (Contoh : ens37) | "
       private: no
 
     - name: vlan_interface
@@ -21,35 +21,35 @@
       private: no
 
     - name: secondary_ip_addr
-      prompt: "Masukkan ip address interface kedua dengan prefix (Contoh : 100.100.10.1/24) | "
+      prompt: "[PRIMARY] Masukkan ip address interface kedua dengan prefix (Contoh : 100.100.10.1/24) | "
       private: no
 
     - name: vlan_ip_addr
-      prompt: "[VLAN] Masukkan ip address interface vlan dengan prefix (Contoh : 120.100.10.0/24) | "
+      prompt: "[VLAN] Masukkan ip address interface vlan dengan prefix (Contoh : 120.100.10.1/24) | "
       private: no
     
     - name: dhcp_network
-      prompt: "Masukkan network untuk dhcp pool anda (Contoh : 100.100.10.0) | "
+      prompt: "[PRIMARY] Masukkan network untuk dhcp pool anda (Contoh : 100.100.10.0) | "
       private: no
 
     - name: dhcp_netmask
-      prompt: "Masukkan netmask untuk dhcp pool anda (Contoh : 255.255.255.0) | "
+      prompt: "[PRIMARY] Masukkan netmask untuk dhcp pool anda (Contoh : 255.255.255.0) | "
       private: no
 
     - name: dhcp_range
-      prompt: "Masukkan range untuk dhcp pool anda (Contoh : 100.100.10.2 100.100.10.254) | "
+      prompt: "[PRIMARY] Masukkan range untuk dhcp pool anda (Contoh : 100.100.10.2 100.100.10.254) | "
       private: no
 
     - name: dhcp_dns
-      prompt: "Masukkan nameserver/DNS untuk dhcp pool anda (Contoh : 8.8.8.8) | "
+      prompt: "[PRIMARY] Masukkan nameserver/DNS untuk dhcp pool anda (Contoh : 8.8.8.8) | "
       private: no
 
     - name: dhcp_gateway
-      prompt: "Masukkan gateway untuk dhcp pool anda (Contoh : 100.100.10.1) | "
+      prompt: "[PRIMARY] Masukkan gateway untuk dhcp pool anda (Contoh : 100.100.10.1) | "
       private: no
 
     - name: dhcp_broadcast
-      prompt: "Masukkan broadcast address untuk dhcp pool anda (Contoh : 100.100.10.255) | "
+      prompt: "[PRIMARY] Masukkan broadcast address untuk dhcp pool anda (Contoh : 100.100.10.255) | "
       private: no
 
     - name: vlan_dhcp_network
@@ -165,6 +165,11 @@
       ansible.builtin.pause:
         prompt: "REKOMENDASI : JIKA IP TIDAK MENGALIR, RESTART MANUAL CLIENT DAN CEK KONFIGURASI IP DI CLIENT ANDA"
         seconds: 10
+
+    - name: PERHATIAN!
+      ansible.builtin.pause:
+        prompt: "JIKA ISC-DHCP-SERVER ERROR SAAT RESTART JALANKAN PERINTAH journalctl -xeu isc-dhcp-server.service | ERROR BIASANYA TERJADI KARENA KESALAHAN PADA SAAT INPUT"
+        seconds: 20
 
   handlers:
     - name: Restart pc-router
