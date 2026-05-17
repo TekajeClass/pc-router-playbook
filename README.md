@@ -42,10 +42,10 @@ Proyek ini menyediakan Ansible Playbook untuk mengkonfigurasi komputer berbasis 
 ## 🏗️ Arsitektur
 
 ```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Internet      │────│   WAN Interface │────│   PC-Router     │
-│                 │    │   (ens33)       │    │   (Ansible)     │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
+┌─────────────────┐                           ┌─────────────────┐
+│   Internet      │───────────────────────────│   PC-Router     │
+│                 │            WAN Interface  │   (Ansible)     │
+└─────────────────┘              (ens33)      └─────────────────┘
                                                      │
                                                      │ LAN Interface
                                                      │ (ens37)
