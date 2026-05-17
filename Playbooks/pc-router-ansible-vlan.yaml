@@ -79,12 +79,12 @@
   tasks:
     - name: TENTANG CREATOR
       ansible.builtin.pause:
-        prompt: "This Playbook Created by analuaM sagaB | Universitas Bani Saleh"
+        prompt: "This Playbook Created by analuaM sagaB | Universitas Bani Saleh |"
         seconds: 5
 
     - name: DISCLAIMER DARI CREATOR
       ansible.builtin.pause:
-        prompt: "DISCLAIMER: SCRIPT INI 97% DIBUAT TANPA AI. AI HANYA DIGUNAKAN UNTUK MEMBANTU MENJELASKAN DOKUMENTASI DARI MODULE ANSIBLE"
+        prompt: "SCRIPT INI 97% DIBUAT TANPA AI. AI HANYA DIGUNAKAN UNTUK MEMBANTU MENJELASKAN DOKUMENTASI DARI MODULE ANSIBLE"
         seconds: 10
 
     - name: Update repository
