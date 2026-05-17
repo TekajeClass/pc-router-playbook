@@ -1,0 +1,64 @@
+# Jalankan playbook pc-router terlebih dahulu
+# Atau langsung gunakan jika anda hanya butuh playbook iptables saja
+# Yaml Code by Bagas Maulana
+---
+- name: Iptables playbook - Port Forward
+  become: yes
+  hosts: target
+  vars_prompt:
+    - name: interface
+      prompt: "Masukkan interface inside "
+      private: no
+
+    - name: protocol
+      prompt: "Masukkan Protcol yang ingin di port forward "
+      private: no
+
+    - name: dest_ip
+      prompt: "Masukkan Destination Address (Ip address yang ingin di port forward) "
+      private: no
+
+    - name: dest_port
+      prompt: "Masukkan Destination Port (Port yang ingin di port forward) "
+      private: no
+
+    - name: to_ip
+      prompt: "Masukkan To Address (Ip address terluar yang ingin digunakan) "
+      private: no
+
+    - name: to_port
+      prompt: "Masukkan To Port (Port terluar yang ingin digunakan) "
+      private: no
+  tasks:
+    - name: TENTANG CREATOR
+      ansible.builtin.pause:
+        prompt: "This Playbook Created by analuaM sagaB | Universitas Bani Saleh |"
+        seconds: 5
+
+    - name: DISCLAIMER DARI CREATOR
+      ansible.builtin.pause:
+        prompt: "SCRIPT INI 97% DIBUAT TANPA AI. AI HANYA DIGUNAKAN UNTUK MEMBANTU MENJELASKAN DOKUMENTASI DARI MODULE ANSIBLE"
+        seconds: 10
+
+    - name: Update repository
+      apt:
+        update_cache: yes
+      ignore_errors: yes
+
+    - name: Install iptables
+      apt:
+        name: iptables
+        state: present
+      ignore_errors: yes
+    
+    - name: Running iptables rule | Port Forward
+      ansible.builtin.iptables:
+        table: nat
+        protocol: "{{ protocol }}"
+        match: "{{ protocol }}"
+        chain: PREROUTING
+        in_interface: "{{ interface }}"
+        destination: "{{ dest_ip }}"
+        destination_port: "{{ dest_port }}"
+        jump: DNAT 
+        to_destination: "{{ to_ip }}:{{to_port}}"
