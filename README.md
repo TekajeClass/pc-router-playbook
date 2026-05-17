@@ -15,16 +15,17 @@
 - [Tentang Proyek](#tentang-proyek)
 - [Arsitektur](#arsitektur)
 - [Fitur](#fitur)
-- [Persyaratan](#persyaratan)
-- [Instalasi](#instalasi)
-- [Penggunaan](#penggunaan)
-- [Konfigurasi](#konfigurasi)
-- [Verifikasi Setup](#verifikasi-setup)
-- [Troubleshooting](#troubleshooting)
-- [FAQ](#faq)
-- [Kontribusi](#kontribusi)
-- [Lisensi](#lisensi)
-- [Changelog](#changelog)
+- [Struktur Folder & Fungsi](#-struktur-folder--fungsi)
+- [Persyaratan](#-persyaratan)
+- [Instalasi](#-instalasi)
+- [Penggunaan](#-penggunaan)
+- [Konfigurasi](#-konfigurasi)
+- [Verifikasi Setup](#-verifikasi-setup)
+- [Troubleshooting](#-troubleshooting)
+- [FAQ](#-faq)
+- [Kontribusi](#-kontribusi)
+- [Lisensi](#-lisensi)
+- [Changelog](#-changelog)
 
 ## 📝 Tentang Proyek
 
@@ -76,7 +77,36 @@ Proyek ini menyediakan Ansible Playbook untuk mengkonfigurasi komputer berbasis 
 - ✅ **Idempotent** - dapat dijalankan berulang tanpa masalah
 - ✅ **Cross-platform** support untuk Debian
 
-## 📦 Persyaratan
+## � Struktur Folder & Fungsi
+
+```
+pc-router-playbook/
+├── README.md                          # Dokumentasi lengkap
+├── Playbooks/                         # 📌 Main playbook directory
+│   ├── pc-router-ansible.yaml        # ⭐ Playbook utama (single network)
+│   ├── pc-router-ansible-vlan.yaml   # ⭐ Playbook VLAN (multiple networks)
+│   └── Iptables Playbook/            # Iptables utility playbooks
+│       ├── Block-Connectivity-Iptables.yaml
+│       ├── Block-ICMP-Iptables.yaml
+│       ├── Block-Internet-Iptables.yaml
+│       └── Port-Forward-Iptables.yaml
+├── dhcp-config/                       # 📌 DHCP config templates
+│   ├── dhcpd.conf                    # Template DHCP standar
+│   └── dhcpd-vlan.conf               # Template DHCP untuk VLAN
+└── default/                          # 📌 Default service configs
+    ├── isc-dhcp-server               # Default ISC DHCP service config
+    └── isc-dhcp-server-vlan          # Default ISC DHCP config untuk VLAN
+```
+
+### 📋 Penjelasan Folder
+
+| Folder | Fungsi |
+|--------|--------|
+| **Playbooks/** | Berisi playbook Ansible utama untuk konfigurasi router dan utility iptables |
+| **dhcp-config/** | Template file konfigurasi DHCP yang akan dirender saat menjalankan playbook |
+| **default/** | File konfigurasi default untuk service ISC DHCP Server |
+
+## �📦 Persyaratan
 
 ### 🔧 Sistem Target (Router Machine)
 - **OS**: Linux berbasis Debian
@@ -109,11 +139,42 @@ ansible-galaxy collection install ansible.posix
 ### 1. Clone Repository
 
 ```bash
-git clone https://github.com/yourusername/ansible-pc-router.git
-cd ansible-pc-router
+git clone https://github.com/TekajeClass/pc-router-playbook.git
+cd pc-router-playbook
 ```
 
-### 2. Install Ansible
+### 2. Setup File Setelah Clone (PENTING ⚠️)
+
+Salin file yaml playbook ke parent directory (1 folder di atas folder pc-router-playbook):
+
+**Linux/macOS:**
+```bash
+# Dari dalam folder pc-router-playbook
+cp Playbooks/*.yaml ../
+```
+
+**Windows (PowerShell):**
+```powershell
+# Dari dalam folder pc-router-playbook
+Copy-Item -Path Playbooks\*.yaml -Destination .. -Force
+```
+
+**Hasil struktur direktori setelah copy:**
+```
+parent-folder/
+├── pc-router-playbook/          (cloned repository)
+│   ├── Playbooks/
+│   │   ├── pc-router-ansible.yaml
+│   │   ├── pc-router-ansible-vlan.yaml
+│   │   └── Iptables Playbook/
+│   ├── dhcp-config/
+│   ├── default/
+│   └── README.md
+├── pc-router-ansible.yaml       (copied untuk digunakan)
+└── pc-router-ansible-vlan.yaml  (copied untuk digunakan)
+```
+
+### 3. Install Ansible
 
 **Pada Debian:**
 ```bash
@@ -132,13 +193,13 @@ ansible --version
 # Output: ansible [core 2.15.0]
 ```
 
-### 3. Install Required Collections
+### 4. Install Required Collections
 
 ```bash
 ansible-galaxy collection install ansible.posix
 ```
 
-### 4. Setup SSH Access
+### 5. Setup SSH Access
 
 **Generate SSH key (jika belum ada):**
 ```bash
@@ -150,7 +211,7 @@ ssh-keygen -t rsa -b 4096 -C "your-email@example.com"
 ssh-copy-id username@target-ip
 ```
 
-### 5. Configure Inventory
+### 6. Configure Inventory
 
 Buat file `inventory.ini`:
 
@@ -167,12 +228,10 @@ ansible_python_interpreter=/usr/bin/python3
 ### Basic Execution
 
 ```bash
-# Keluarkan script yaml dari folder pc-router-playbook
-mv pc-router-playbook/pc-router-ansible.yaml .
-# Menggunakan inventory file
+# PENTING: Jalankan dari parent directory (di luar pc-router-playbook folder)
 ansible-playbook -i inventory.ini pc-router-ansible.yaml
 
-# Menggunakan host langsung
+# Menggunakan host langsung (tanpa inventory file)
 ansible-playbook -i "router-01," pc-router-ansible.yaml
 ```
 
@@ -518,7 +577,7 @@ Gunakan template issue untuk bug reports:
 
 <div align="center">
 
-**Made with Brain🧠 by Bagas Maulana**
+**Made with Brain🧠 by Bagas Maulana | Universitas Bani Saleh | Forum Open Source**
 
 ⭐ **Star this repo** if you found it helpful!
 
