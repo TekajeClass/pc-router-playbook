@@ -1,0 +1,131 @@
+# DISCLAIMER : SCRIPT INI 97% DIBUAT TANPA AI. PENGGUNAAN AI HANYA UNTUK MEMBANTU PENJELASAN DOKUMENTASI DARI MODULE
+# CLONE GITHUB BERIKUT :
+# https://github.com/TekajeClass/pc-router-playbook
+# BUKA GITHUB DI ATAS UNTUK INFORMASI LEBIH LANJUT TENTANG PLAYBOOK INI
+# Script Created by : Bagas Maulana
+---
+- name: PC Router Configuration Playbook
+  hosts: target
+  become: yes
+  vars_prompt:
+    - name: wan_interface
+      prompt: "Masukkan interface yang mengarah ke public (Contoh : ens33) | "
+      private: no
+
+    - name: secondary_interface
+      prompt: "Masukkan interface kedua anda (Contoh : ens37) | "
+      private: no
+
+    - name: secondary_ip_addr
+      prompt: "Masukkan ip address interface kedua dengan prefix (Contoh : 100.100.10.1/24) | "
+      private: no
+    
+    - name: dhcp_network
+      prompt: "Masukkan network untuk dhcp pool anda (Contoh : 100.100.10.0) | "
+      private: no
+
+    - name: dhcp_netmask
+      prompt: "Masukkan netmask untuk dhcp pool anda (Contoh : 255.255.255.0) | "
+      private: no
+
+    - name: dhcp_range
+      prompt: "Masukkan range untuk dhcp pool anda (Contoh : 100.100.10.2 100.100.10.254) | "
+      private: no
+
+    - name: dhcp_dns
+      prompt: "Masukkan nameserver/DNS untuk dhcp pool anda (Contoh : 8.8.8.8) | "
+      private: no
+
+    - name: dhcp_gateway
+      prompt: "Masukkan gateway untuk dhcp pool anda (Contoh : 100.100.10.1) | "
+      private: no
+
+    - name: dhcp_broadcast
+      prompt: "Masukkan broadcast address untuk dhcp pool anda (Contoh : 100.100.10.255) | "
+      private: no
+
+  tasks:
+    - name: TENTANG CREATOR
+      ansible.builtin.pause:
+        prompt: "This Playbook Created by analuaM sagaB | Universitas Bani Saleh"
+        seconds: 5
+
+    - name: DISCLAIMER DARI CREATOR
+      ansible.builtin.pause:
+        prompt: "DISCLAIMER: SCRIPT INI 97% DIBUAT TANPA AI. AI HANYA DIGUNAKAN UNTUK MEMBANTU MENJELASKAN DOKUMENTASI DARI MODULE ANSIBLE"
+        seconds: 10
+
+    - name: Update repository
+      apt:
+        update_cache: yes
+      ignore_errors: yes
+
+    - name: Installing Package (1/2)
+      apt:
+        name: isc-dhcp-server
+        state: present
+      ignore_errors: yes
+
+    - name: Installing Package (2/2)
+      apt:
+        name: iptables
+        state: present
+      ignore_errors: yes
+        
+    - name: Add secondary interface for distribution
+      ansible.builtin.blockinfile:
+        path: /etc/network/interfaces
+        marker: "# {mark} ADDED WITH ANSIBLE - SECONDARY INTERFACE"
+        insertafter: EOF
+        block: |
+          allow-hotplug {{secondary_interface}}
+          iface {{secondary_interface}} inet static
+                address {{secondary_ip_addr}}
+
+    - name: Restart networking
+      systemd:
+        name: networking
+        state: restarted
+
+    - name: Injecting Configuration File into isc-dhcp-server Manifest File
+      template:
+        src: pc-router-playbook/dhcp-config/dhcpd.conf
+        dest: /etc/dhcp/dhcpd.conf
+      notify: Restart pc-router
+
+    - name: Injecting default isc-dhcp-server configuration File
+      template:
+        src: pc-router-playbook/default/isc-dhcp-server
+        dest: /etc/default/isc-dhcp-server
+      notify: Restart pc-router
+
+    - name: Activating IPv4 Forwarding
+      ansible.posix.sysctl:
+        name: net.ipv4.ip_forward
+        value: '1'
+        sysctl_set: yes
+        state: present
+        reload: yes
+
+    - name: configuring iptables
+      ansible.builtin.iptables:
+        table: nat
+        chain: POSTROUTING
+        out_interface: "{{ wan_interface }}"
+        jump: MASQUERADE
+
+    - name: REKOMENDASI
+      ansible.builtin.pause:
+        prompt: "REKOMENDASI : JIKA IP TIDAK MENGALIR, RESTART MANUAL CLIENT DAN CEK KONFIGURASI IP DI CLIENT ANDA"
+        seconds: 10
+
+    - name: PERHATIAN!
+      ansible.builtin.pause:
+        prompt: "JIKA ISC-DHCP-SERVER ERROR SAAT RESTART JALANKAN PERINTAH journalctl -xeu isc-dhcp-server.service | ERROR BIASANYA TERJADI KARENA KESALAHAN PADA SAAT INPUT"
+        seconds: 20
+
+  handlers:
+    - name: Restart pc-router
+      systemd:
+        name: isc-dhcp-server
+        state: restarted
